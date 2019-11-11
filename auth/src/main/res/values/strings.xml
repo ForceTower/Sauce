@@ -1,0 +1,28 @@
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="pt">
+    <string name="app_name">Authentication</string>
+    <string name="welcome_to_unes">Boas-vindas ao UNES</string>
+    <string name="select_institution_start">Para começar, selecione a sua intituição de ensino</string>
+    <string name="hint_select_institution">Instituição</string>
+    <string name="select_institution_continue">Continuar</string>
+    <string name="institution_not_on_list_request">Sua instituição não está na lista? Faça o pedido de inclusão</string>
+    <string name="label_institution">Instituição de Ensino</string>
+    <string name="label_institution_select_information">Selecione sua instituição de ensino para que o UNES consiga fazer login corretamente.\n\nSe sua instituição não está na lista, adicione uma issue no projeto o GitHub para conversarmos e enfim adicionar suporte à sua universidade</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancelar</string>
+    <string name="lets_start">Vamos começar</string>
+    <string name="username_too_short">Usuário muito curto</string>
+    <string name="password_too_short">Senha muito curta</string>
+    <string name="selected_institution">Instituição: %1$s</string>
+    <string name="hint_password">Senha</string>
+    <string name="hint_username">Usuário</string>
+    <string name="step_continue">Continuar</string>
+    <string name="about_the_app">Sobre o Aplicativo</string>
+    <string name="login_type_sagres_account">Entre usando sua conta do SAGRES</string>
+    <string name="transition_auth_logo">transition_auth_logo</string>
+    <string name="connecting_to_portal">Conectando ao Portal do Estudante</string>
+    <string name="connection_successfull">Parece que está tudo certo!</string>
+    <string name="login_error_invalid_credentials">Parece que o usuário ou senha estão errados</string>
+    <string name="login_error_session_timeout">O login falhou, mas seu usuário e senha parecem certos</string>
+    <string name="login_error_unknown_error">Um erro muito doido! Verifique se o portal está conectando</string>
+    <string name="login_error_main_display">Problemas no paraiso</string>
+</resources>

@@ -1,0 +1,2 @@
+include ':app', ':auth', ':core', ':model', ':database', ':sync'
+rootProject.name='Sauce'
