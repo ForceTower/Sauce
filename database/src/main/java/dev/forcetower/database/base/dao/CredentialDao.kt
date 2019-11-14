@@ -31,6 +31,9 @@ abstract class CredentialDao : AbstractDao<Credential>() {
     @Query("SELECT * FROM Credential")
     abstract suspend fun getAll(): List<Credential>
 
+    @Query("SELECT * FROM Credential WHERE selected = 1")
+    abstract suspend fun getActiveCredential(): Credential?
+
     @Query("SELECT * FROM Credential WHERE username = :username AND institution = :institution LIMIT 1")
     abstract suspend fun getCredential(username: String, institution: String): Credential?
 
@@ -44,7 +47,7 @@ abstract class CredentialDao : AbstractDao<Credential>() {
     protected abstract suspend fun markSelected(uid: Long)
 
     @Transaction
-    open suspend fun markActive(username: String, institution: String) {
+    open suspend fun select(username: String, institution: String) {
         val credential = getCredential(username, institution)
         if (credential != null) {
             markAllNotSelected()
@@ -53,7 +56,7 @@ abstract class CredentialDao : AbstractDao<Credential>() {
     }
 
     @Transaction
-    open suspend fun markActive(uid: Long) {
+    open suspend fun select(uid: Long) {
         markAllNotSelected()
         markSelected(uid)
     }

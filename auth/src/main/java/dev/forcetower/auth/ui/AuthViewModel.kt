@@ -62,10 +62,8 @@ class AuthViewModel @Inject constructor(
         viewModelScope.launch {
             val result = repository.executeLogin(username, password, institution)
             _loginStatus.value = result
-            if (result != 200) {
-                delay(1000)
-                _backSignal.value = 1
-            }
+            delay(1000)
+            _backSignal.value = if (result == 200) 0 else 1
         }
     }
 

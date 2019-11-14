@@ -24,55 +24,87 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/app_nav_graph"
-    app:startDestination="@id/select_institution">
+    app:startDestination="@id/launcher">
 
     <fragment
-        android:id="@+id/select_institution"
-        android:name="dev.forcetower.auth.ui.SelectInstitutionFragment"
-        android:label="SelectInstitution"
-        tools:layout="@layout/fragment_select_institution">
-        <action
-            android:id="@+id/login"
-            app:destination="@id/login_institution"
-            app:enterAnim="@anim/fragment_open_enter_fast"
-            app:exitAnim="@anim/fragment_open_exit_fast"
-            app:popEnterAnim="@anim/fragment_close_enter"
-            app:popExitAnim="@anim/fragment_close_exit"/>
+        android:id="@+id/launcher"
+        android:name="dev.forcetower.unes.LaunchFragment"
+        android:label="LaunchFragment" >
         <action
             android:id="@+id/select_institution"
-            app:destination="@id/select_institution_dialog" />
-    </fragment>
-    <fragment
-        android:id="@+id/login_institution"
-        android:name="dev.forcetower.auth.ui.LoginFragment"
-        android:label="Login"
-        tools:layout="@layout/fragment_login">
+            app:destination="@id/auth"
+            app:popUpTo="@id/app_nav_graph" />
         <action
-            android:id="@+id/logging_in"
-            app:destination="@id/logging_in"
-            app:enterAnim="@anim/fragment_open_enter_fast"
-            app:exitAnim="@anim/fragment_open_exit_fast"
-            app:popEnterAnim="@anim/fragment_close_enter"
-            app:popExitAnim="@anim/fragment_close_exit" />
+            android:id="@+id/dashboard"
+            app:destination="@id/dashboard"
+            app:popUpTo="@id/app_nav_graph" />
     </fragment>
+
     <fragment
-        android:id="@+id/logging_in"
-        android:name="dev.forcetower.auth.ui.ConnectingFragment"
-        android:label="Connecting"
-        tools:layout="@layout/fragment_connecting">
-        <argument
-            android:name="username"
-            app:argType="string" />
-        <argument
-            android:name="password"
-            app:argType="string" />
-        <argument
-            android:name="institution"
-            app:argType="string" />
-    </fragment>
-    <dialog
-        android:id="@+id/select_institution_dialog"
-        android:name="dev.forcetower.auth.ui.SelectInstitutionDialog"
-        android:label="SelectInstitutionDialog"
-        tools:layout="@layout/dialog_select_institution"/>
+        android:id="@+id/dashboard"
+        android:name="dev.forcetower.dashboard.ui.DashboardFragment"
+        android:label="Dashboard"
+        tools:layout="@layout/fragment_dashboard" />
+
+    <navigation
+        android:id="@+id/auth"
+        app:startDestination="@id/select_institution">
+        <dialog
+            android:id="@+id/select_institution_dialog"
+            android:name="dev.forcetower.auth.ui.SelectInstitutionDialog"
+            android:label="SelectInstitutionDialog"
+            tools:layout="@layout/dialog_select_institution" />
+        <fragment
+            android:id="@+id/login_institution"
+            android:name="dev.forcetower.auth.ui.LoginFragment"
+            android:label="Login"
+            tools:layout="@layout/fragment_login">
+            <action
+                android:id="@+id/logging_in"
+                app:destination="@id/logging_in"
+                app:enterAnim="@anim/fragment_open_enter_fast"
+                app:exitAnim="@anim/fragment_open_exit_fast"
+                app:popEnterAnim="@anim/fragment_close_enter"
+                app:popExitAnim="@anim/fragment_close_exit" />
+        </fragment>
+        <fragment
+            android:id="@+id/select_institution"
+            android:name="dev.forcetower.auth.ui.SelectInstitutionFragment"
+            android:label="SelectInstitution"
+            tools:layout="@layout/fragment_select_institution">
+            <action
+                android:id="@+id/login"
+                app:destination="@id/login_institution"
+                app:enterAnim="@anim/fragment_open_enter_fast"
+                app:exitAnim="@anim/fragment_open_exit_fast"
+                app:popEnterAnim="@anim/fragment_close_enter"
+                app:popExitAnim="@anim/fragment_close_exit" />
+            <action
+                android:id="@+id/select_institution"
+                app:destination="@id/select_institution_dialog" />
+        </fragment>
+        <fragment
+            android:id="@+id/logging_in"
+            android:name="dev.forcetower.auth.ui.ConnectingFragment"
+            android:label="Connecting"
+            tools:layout="@layout/fragment_connecting">
+            <argument
+                android:name="username"
+                app:argType="string" />
+            <argument
+                android:name="password"
+                app:argType="string" />
+            <argument
+                android:name="institution"
+                app:argType="string" />
+            <action
+                android:id="@+id/dashboard"
+                app:destination="@id/dashboard"
+                app:enterAnim="@anim/fragment_open_enter_fast"
+                app:exitAnim="@anim/fragment_open_exit_fast"
+                app:popEnterAnim="@anim/fragment_close_enter"
+                app:popExitAnim="@anim/fragment_close_exit"
+                app:popUpTo="@id/app_nav_graph" />
+        </fragment>
+    </navigation>
 </navigation>

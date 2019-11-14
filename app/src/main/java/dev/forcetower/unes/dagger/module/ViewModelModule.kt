@@ -18,17 +18,24 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package dev.forcetower.auth.core
+package dev.forcetower.unes.dagger.module
 
-import dev.forcetower.sync.LoginProcessor
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import javax.inject.Inject
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import dagger.Binds
+import dagger.Module
+import dagger.multibindings.IntoMap
+import dev.forcetower.core.base.BaseViewModelFactory
+import dev.forcetower.core.dagger.scope.ViewModelKey
+import dev.forcetower.unes.LaunchViewModel
 
-class AuthRepository @Inject constructor(
-    private val processor: LoginProcessor
-) {
-    suspend fun executeLogin(username: String, password: String, institution: String): Int = withContext(Dispatchers.IO) {
-        processor.process(username, password, institution, true).code
-    }
+@Module
+abstract class ViewModelModule {
+    @Binds
+    @IntoMap
+    @ViewModelKey(LaunchViewModel::class)
+    abstract fun bindLaunchViewModel(vm: LaunchViewModel): ViewModel
+
+    @Binds
+    abstract fun bindViewModelFactory(factory: BaseViewModelFactory): ViewModelProvider.Factory
 }

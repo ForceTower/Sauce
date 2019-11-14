@@ -26,6 +26,6 @@ import dev.forcetower.unes.MainActivity
 
 @Module
 abstract class ActivityModule {
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(modules = [FragmentsModule::class])
     abstract fun main(): MainActivity
 }

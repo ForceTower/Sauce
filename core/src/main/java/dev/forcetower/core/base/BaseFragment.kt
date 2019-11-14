@@ -36,6 +36,17 @@ import javax.inject.Inject
 abstract class BaseFragment : Fragment() {
     private var currentSnackbar: Snackbar? = null
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        if (shouldApplyBottomInsets()) {
+            view.doOnApplyWindowInsets { v, insets, padding ->
+                v.updatePaddingRelative(bottom = padding.bottom + insets.systemWindowInsetBottom)
+            }
+        }
+    }
+
+    open fun shouldApplyBottomInsets() = true
+
     fun dismissCurrentSnack() = currentSnackbar?.dismiss()
 
     fun showSnack(string: String, duration: Int = Snackbar.LENGTH_SHORT) {
@@ -63,17 +74,6 @@ abstract class BaseDaggerFragment : BaseFragment(), HasAndroidInjector {
         AndroidSupportInjection.inject(this)
         super.onAttach(context)
     }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        if (shouldApplyBottomInsets()) {
-            view.doOnApplyWindowInsets { v, insets, padding ->
-                v.updatePaddingRelative(bottom = padding.bottom + insets.systemWindowInsetBottom)
-            }
-        }
-    }
-
-    open fun shouldApplyBottomInsets() = true
 
     override fun androidInjector() = androidInjector
 }

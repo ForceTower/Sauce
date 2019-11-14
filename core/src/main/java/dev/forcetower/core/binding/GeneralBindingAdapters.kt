@@ -18,17 +18,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package dev.forcetower.auth.core
+package dev.forcetower.core.binding
 
-import dev.forcetower.sync.LoginProcessor
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import javax.inject.Inject
+import android.widget.ImageView
+import androidx.databinding.BindingAdapter
+import dev.forcetower.core.widget.CircularOutlineProvider
 
-class AuthRepository @Inject constructor(
-    private val processor: LoginProcessor
-) {
-    suspend fun executeLogin(username: String, password: String, institution: String): Int = withContext(Dispatchers.IO) {
-        processor.process(username, password, institution, true).code
-    }
+@BindingAdapter("clipToCircle")
+fun clipToCircle(view: ImageView, clip: Boolean) {
+    view.clipToOutline = clip
+    view.outlineProvider = if (clip) CircularOutlineProvider else null
 }

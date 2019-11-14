@@ -18,17 +18,16 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package dev.forcetower.auth.core
+package dev.forcetower.unes.core
 
-import dev.forcetower.sync.LoginProcessor
+import dev.forcetower.database.base.UNESDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class AuthRepository @Inject constructor(
-    private val processor: LoginProcessor
+class LaunchRepository @Inject constructor(
+    private val database: UNESDatabase
 ) {
-    suspend fun executeLogin(username: String, password: String, institution: String): Int = withContext(Dispatchers.IO) {
-        processor.process(username, password, institution, true).code
-    }
+
+    suspend fun getSelectedCredential() = withContext(Dispatchers.IO) { database.credentials().getActiveCredential() }
 }

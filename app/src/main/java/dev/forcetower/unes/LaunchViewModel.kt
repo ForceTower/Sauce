@@ -18,17 +18,27 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package dev.forcetower.auth.core
+package dev.forcetower.unes
 
-import dev.forcetower.sync.LoginProcessor
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import dev.forcetower.core.data.SingleLiveEvent
+import dev.forcetower.unes.core.LaunchRepository
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class AuthRepository @Inject constructor(
-    private val processor: LoginProcessor
-) {
-    suspend fun executeLogin(username: String, password: String, institution: String): Int = withContext(Dispatchers.IO) {
-        processor.process(username, password, institution, true).code
+class LaunchViewModel @Inject constructor(
+    private val repository: LaunchRepository
+) : ViewModel() {
+
+    fun isConnected(): LiveData<Boolean> {
+        val result = SingleLiveEvent<Boolean>()
+        viewModelScope.launch {
+            val credential = repository.getSelectedCredential()
+            val connected = credential != null
+            result.value = connected
+        }
+        return result
     }
 }

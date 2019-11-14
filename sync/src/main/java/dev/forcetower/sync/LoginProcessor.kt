@@ -31,17 +31,17 @@ import javax.inject.Inject
 class LoginProcessor @Inject constructor(
     private val database: UNESDatabase
 ) {
-    suspend fun process(username: String, password: String, institution: String): LoginCallback {
+    suspend fun process(username: String, password: String, institution: String, markSelected: Boolean = false): LoginCallback {
         SagresNavigator.instance.logout()
         SagresNavigator.instance.setSelectedInstitution(institution)
         val result = SagresNavigator.instance.login(username, password)
         if (result.status == Status.SUCCESS) {
-            updateOrCreateAccess(username, password, institution)
+            updateOrCreateAccess(username, password, institution, markSelected)
         }
         return result
     }
 
-    private suspend fun updateOrCreateAccess(username: String, password: String, institution: String) {
+    private suspend fun updateOrCreateAccess(username: String, password: String, institution: String, markSelected: Boolean) {
         val current = database.credentials().getCredential(username, institution)
         if (current == null) {
             database.credentials().insert(Credential(0, username, password, institution, false))
@@ -49,5 +49,6 @@ class LoginProcessor @Inject constructor(
             database.credentials().changePassword(username, password, institution)
         }
         database.credentials().markValid(username, institution, true)
+        if (markSelected) database.credentials().select(username, institution)
     }
 }

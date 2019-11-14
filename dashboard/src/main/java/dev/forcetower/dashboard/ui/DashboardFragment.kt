@@ -21,13 +21,37 @@
 package dev.forcetower.dashboard.ui
 
 import android.content.Context
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.core.view.updatePaddingRelative
 import dev.forcetower.core.base.BaseFragment
+import dev.forcetower.core.extensions.doOnApplyWindowInsets
 import dev.forcetower.unes.coreComponent
 import dev.forcetower.dashboard.dagger.DaggerDashboardComponent
+import dev.forcetower.dashboard.databinding.FragmentDashboardBinding
 
 class DashboardFragment : BaseFragment() {
+    private lateinit var binding: FragmentDashboardBinding
+
     override fun onAttach(context: Context) {
         DaggerDashboardComponent.builder().coreComponent(coreComponent()).build().inject(this)
         super.onAttach(context)
+    }
+
+    override fun shouldApplyBottomInsets() = false
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return FragmentDashboardBinding.inflate(inflater, container, false).also {
+            binding = it
+        }.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.recyclerElements.doOnApplyWindowInsets { v, insets, padding ->
+            v.updatePaddingRelative(bottom = padding.bottom + insets.systemWindowInsetBottom)
+        }
     }
 }

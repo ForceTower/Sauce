@@ -65,8 +65,13 @@ class ConnectingFragment : BaseFragment() {
         Timber.d(binding.logoAuth.transitionName)
         viewModel.loginStatus.observe(viewLifecycleOwner, Observer { onLoginResult(it) })
         viewModel.backSignal.observe(viewLifecycleOwner, Observer {
-            Timber.d("Back signal received")
-            findNavController().popBackStack()
+            if (it != 0) {
+                Timber.d("Back signal received")
+                findNavController().popBackStack()
+            } else {
+                val directions = ConnectingFragmentDirections.dashboard()
+                findNavController().navigate(directions)
+            }
         })
     }
 
