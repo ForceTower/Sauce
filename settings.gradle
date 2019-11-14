@@ -1,2 +1,2 @@
-include ':app', ':auth', ':core', ':model', ':database', ':sync'
+include ':app', ':auth', ':core', ':model', ':database', ':sync', ':dashboard'
 rootProject.name='Sauce'
