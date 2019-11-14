@@ -53,6 +53,7 @@ class ConnectingFragment : BaseDaggerFragment() {
             Timber.d("Execute login command")
             viewModel.executeLogin(args.username, args.password, args.institution)
         }
+        Timber.d(binding.logoAuth.transitionName)
         viewModel.loginStatus.observe(viewLifecycleOwner, Observer { onLoginResult(it) })
         viewModel.backSignal.observe(viewLifecycleOwner, Observer {
             Timber.d("Back signal received")

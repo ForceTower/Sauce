@@ -28,7 +28,8 @@
         android:layout_height="match_parent"
         android:fillViewport="true"
         android:clipToPadding="false"
-        android:scrollbars="none">
+        android:scrollbars="none"
+        android:background="?android:attr/windowBackground">
 
         <LinearLayout
             android:layout_width="match_parent"

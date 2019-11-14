@@ -25,8 +25,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
-import androidx.core.app.NavUtils
-import androidx.core.view.updatePaddingRelative
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.FragmentNavigatorExtras
@@ -37,7 +35,7 @@ import dev.forcetower.auth.R
 import dev.forcetower.auth.databinding.FragmentLoginBinding
 import dev.forcetower.core.base.BaseDaggerFragment
 import dev.forcetower.core.base.BaseViewModelFactory
-import dev.forcetower.core.extensions.doOnApplyWindowInsets
+import timber.log.Timber
 import javax.inject.Inject
 
 class LoginFragment : BaseDaggerFragment() {
@@ -65,6 +63,7 @@ class LoginFragment : BaseDaggerFragment() {
         binding.next.setOnClickListener { onLogin() }
         binding.username.setOnFocusChangeListener { _, _ -> dismissCurrentSnack() }
         binding.password.setOnFocusChangeListener { _, _ -> dismissCurrentSnack() }
+        Timber.d(binding.logoAuth.transitionName)
     }
 
     private fun onLogin() {
@@ -79,11 +78,11 @@ class LoginFragment : BaseDaggerFragment() {
         }
         if (password.length < 4) {
             binding.password.error = getString(R.string.password_too_short)
-            binding.username.requestFocus()
+            binding.password.requestFocus()
             return
         }
 
-        val extras = FragmentNavigatorExtras(binding.logoAuth to "transition_auth_logo")
+        val extras = FragmentNavigatorExtras(binding.logoAuth to binding.logoAuth.transitionName)
         val directions = LoginFragmentDirections.loggingIn(username, password, SagresNavigator.instance.getSelectedInstitution())
         findNavController().navigate(directions, extras)
     }
