@@ -30,7 +30,6 @@ import dev.forcetower.core.dagger.scope.FeatureScope
 import dev.forcetower.unes.UNESApp
 import dev.forcetower.unes.dagger.module.ActivityModule
 import dev.forcetower.unes.dagger.module.ServiceModule
-import dev.forcetower.unes.dagger.module.ViewModelModule
 
 @FeatureScope
 @Component(
@@ -38,8 +37,7 @@ import dev.forcetower.unes.dagger.module.ViewModelModule
         AndroidInjectionModule::class,
         AndroidSupportInjectionModule::class,
         ServiceModule::class,
-        ActivityModule::class,
-        ViewModelModule::class
+        ActivityModule::class
     ],
     dependencies = [CoreComponent::class]
 )

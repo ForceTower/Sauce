@@ -20,6 +20,7 @@
 
 package dev.forcetower.auth.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -27,18 +28,25 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.preference.PreferenceManager
 import com.forcetower.sagres.SagresNavigator
+import dev.forcetower.auth.dagger.DaggerAuthComponent
 import dev.forcetower.auth.databinding.DialogSelectInstitutionBinding
 import dev.forcetower.core.Constants
 import dev.forcetower.core.base.BaseDialogDaggerFragment
 import dev.forcetower.core.base.BaseDialogFragment
 import dev.forcetower.core.base.BaseViewModelFactory
+import dev.forcetower.unes.coreComponent
 import timber.log.Timber
 import javax.inject.Inject
 
-class SelectInstitutionDialog : BaseDialogDaggerFragment() {
+class SelectInstitutionDialog : BaseDialogFragment() {
     @Inject lateinit var factory: BaseViewModelFactory
     private lateinit var binding: DialogSelectInstitutionBinding
     private val viewModel: AuthViewModel by activityViewModels { factory }
+
+    override fun onAttach(context: Context) {
+        DaggerAuthComponent.builder().coreComponent(coreComponent()).build().inject(this)
+        super.onAttach(context)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return DialogSelectInstitutionBinding.inflate(inflater, container, false).also {

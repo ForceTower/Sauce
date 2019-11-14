@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="pt">
-    <string name="app_name">Authentication</string>
+    <string name="title_auth">Autenticação</string>
     <string name="welcome_to_unes">Boas-vindas ao UNES</string>
     <string name="select_institution_start">Para começar, selecione a sua intituição de ensino</string>
     <string name="hint_select_institution">Instituição</string>

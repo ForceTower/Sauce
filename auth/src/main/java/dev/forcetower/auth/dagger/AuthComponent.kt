@@ -23,13 +23,19 @@ package dev.forcetower.auth.dagger
 import dagger.Component
 import dagger.android.AndroidInjectionModule
 import dagger.android.support.AndroidSupportInjectionModule
+import dev.forcetower.auth.dagger.module.ViewModelModule
+import dev.forcetower.auth.ui.ConnectingFragment
+import dev.forcetower.auth.ui.LoginFragment
+import dev.forcetower.auth.ui.SelectInstitutionDialog
+import dev.forcetower.auth.ui.SelectInstitutionFragment
 import dev.forcetower.core.dagger.CoreComponent
 import dev.forcetower.core.dagger.scope.FeatureScope
 
 @FeatureScope
 @Component(modules = [
     AndroidInjectionModule::class,
-    AndroidSupportInjectionModule::class
+    AndroidSupportInjectionModule::class,
+    ViewModelModule::class
 ], dependencies = [CoreComponent::class])
 interface AuthComponent {
     @Component.Builder
@@ -37,4 +43,9 @@ interface AuthComponent {
         fun coreComponent(component: CoreComponent): Builder
         fun build(): AuthComponent
     }
+
+    fun inject(dialog: SelectInstitutionDialog)
+    fun inject(fragment: SelectInstitutionFragment)
+    fun inject(fragment: LoginFragment)
+    fun inject(fragment: ConnectingFragment)
 }

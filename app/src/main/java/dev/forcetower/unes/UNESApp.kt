@@ -20,8 +20,10 @@
 
 package dev.forcetower.unes
 
+import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.fragment.app.Fragment
 import com.forcetower.sagres.SagresNavigator
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
@@ -64,3 +66,6 @@ class UNESApp : DaggerApplication() {
         fun coreComponent(context: Context) = (context.applicationContext as UNESApp).coreComponent
     }
 }
+
+fun Fragment.coreComponent() = UNESApp.coreComponent(requireContext())
+fun Activity.coreComponent() = UNESApp.coreComponent(this)

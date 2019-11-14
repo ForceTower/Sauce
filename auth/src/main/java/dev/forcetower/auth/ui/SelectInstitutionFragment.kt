@@ -20,24 +20,30 @@
 
 package dev.forcetower.auth.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.updatePaddingRelative
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import dev.forcetower.auth.dagger.DaggerAuthComponent
 import dev.forcetower.auth.databinding.FragmentSelectInstitutionBinding
-import dev.forcetower.core.base.BaseDaggerFragment
+import dev.forcetower.core.base.BaseFragment
 import dev.forcetower.core.base.BaseViewModelFactory
-import dev.forcetower.core.extensions.doOnApplyWindowInsets
+import dev.forcetower.unes.coreComponent
 import javax.inject.Inject
 
-class SelectInstitutionFragment : BaseDaggerFragment() {
+class SelectInstitutionFragment : BaseFragment() {
     @Inject lateinit var factory: BaseViewModelFactory
     private lateinit var binding: FragmentSelectInstitutionBinding
     private val viewModel: AuthViewModel by activityViewModels { factory }
+
+    override fun onAttach(context: Context) {
+        DaggerAuthComponent.builder().coreComponent(coreComponent()).build().inject(this)
+        super.onAttach(context)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return FragmentSelectInstitutionBinding.inflate(inflater, container, false).also {

@@ -20,6 +20,7 @@
 
 package dev.forcetower.auth.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -29,17 +30,25 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import dev.forcetower.auth.R
+import dev.forcetower.auth.dagger.DaggerAuthComponent
 import dev.forcetower.auth.databinding.FragmentConnectingBinding
 import dev.forcetower.core.base.BaseDaggerFragment
+import dev.forcetower.core.base.BaseFragment
 import dev.forcetower.core.base.BaseViewModelFactory
+import dev.forcetower.unes.coreComponent
 import timber.log.Timber
 import javax.inject.Inject
 
-class ConnectingFragment : BaseDaggerFragment() {
+class ConnectingFragment : BaseFragment() {
     @Inject lateinit var factory: BaseViewModelFactory
     private lateinit var binding: FragmentConnectingBinding
     private val viewModel by activityViewModels<AuthViewModel> { factory }
     private val args by navArgs<ConnectingFragmentArgs>()
+
+    override fun onAttach(context: Context) {
+        DaggerAuthComponent.builder().coreComponent(coreComponent()).build().inject(this)
+        super.onAttach(context)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return FragmentConnectingBinding.inflate(inflater, container, false).also {

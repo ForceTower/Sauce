@@ -20,6 +20,7 @@
 
 package dev.forcetower.auth.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -32,17 +33,24 @@ import androidx.navigation.fragment.findNavController
 import com.forcetower.sagres.SagresNavigator
 import com.google.android.material.snackbar.Snackbar
 import dev.forcetower.auth.R
+import dev.forcetower.auth.dagger.DaggerAuthComponent
 import dev.forcetower.auth.databinding.FragmentLoginBinding
-import dev.forcetower.core.base.BaseDaggerFragment
+import dev.forcetower.core.base.BaseFragment
 import dev.forcetower.core.base.BaseViewModelFactory
+import dev.forcetower.unes.coreComponent
 import timber.log.Timber
 import javax.inject.Inject
 
-class LoginFragment : BaseDaggerFragment() {
+class LoginFragment : BaseFragment() {
     @Inject
     lateinit var factory: BaseViewModelFactory
     private lateinit var binding: FragmentLoginBinding
     private val viewModel by activityViewModels<AuthViewModel> { factory }
+
+    override fun onAttach(context: Context) {
+        DaggerAuthComponent.builder().coreComponent(coreComponent()).build().inject(this)
+        super.onAttach(context)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return FragmentLoginBinding.inflate(inflater, container, false).also {

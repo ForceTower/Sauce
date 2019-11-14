@@ -18,26 +18,24 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package dev.forcetower.unes.dagger.module
+package dev.forcetower.auth.dagger.module
 
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import dagger.Binds
 import dagger.Module
-import dagger.android.ContributesAndroidInjector
-import dev.forcetower.auth.ui.ConnectingFragment
-import dev.forcetower.auth.ui.LoginFragment
-import dev.forcetower.auth.ui.SelectInstitutionDialog
-import dev.forcetower.auth.ui.SelectInstitutionFragment
+import dagger.multibindings.IntoMap
+import dev.forcetower.auth.ui.AuthViewModel
+import dev.forcetower.core.base.BaseViewModelFactory
+import dev.forcetower.core.dagger.scope.ViewModelKey
 
 @Module
-abstract class FragmentModule {
-    @ContributesAndroidInjector
-    abstract fun selectInstitution(): SelectInstitutionFragment
+abstract class ViewModelModule {
+    @Binds
+    @IntoMap
+    @ViewModelKey(AuthViewModel::class)
+    abstract fun bindAuthViewModel(vm: AuthViewModel): ViewModel
 
-    @ContributesAndroidInjector
-    abstract fun selectInstitutionDialog(): SelectInstitutionDialog
-
-    @ContributesAndroidInjector
-    abstract fun loginInstitution(): LoginFragment
-
-    @ContributesAndroidInjector
-    abstract fun signingIn(): ConnectingFragment
+    @Binds
+    abstract fun bindViewModelFactory(factory: BaseViewModelFactory): ViewModelProvider.Factory
 }
