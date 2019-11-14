@@ -9,7 +9,7 @@ buildscript {
         compileSdkVersion = 29
         minSdkVersion = 21
         targetSdkVersion = 29
-        androidGradlePlugIn = '4.0.0-alpha02'
+        androidGradlePlugIn = '4.0.0-alpha03'
 
         sagres = '1.3.0'
         jsoup = '1.12.1'

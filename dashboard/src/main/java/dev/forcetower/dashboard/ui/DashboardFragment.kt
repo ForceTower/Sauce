@@ -26,7 +26,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.updatePaddingRelative
-import dev.forcetower.core.base.BaseFragment
+import dev.forcetower.unes.base.BaseFragment
 import dev.forcetower.core.extensions.doOnApplyWindowInsets
 import dev.forcetower.unes.coreComponent
 import dev.forcetower.dashboard.dagger.DaggerDashboardComponent
@@ -34,6 +34,7 @@ import dev.forcetower.dashboard.databinding.FragmentDashboardBinding
 
 class DashboardFragment : BaseFragment() {
     private lateinit var binding: FragmentDashboardBinding
+    private lateinit var adapter: ElementAdapter
 
     override fun onAttach(context: Context) {
         DaggerDashboardComponent.builder().coreComponent(coreComponent()).build().inject(this)
@@ -43,8 +44,14 @@ class DashboardFragment : BaseFragment() {
     override fun shouldApplyBottomInsets() = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        adapter = ElementAdapter()
         return FragmentDashboardBinding.inflate(inflater, container, false).also {
             binding = it
+        }.apply {
+            binding.recyclerElements.adapter = adapter
+            binding.recyclerElements.itemAnimator?.apply {
+                changeDuration = 0
+            }
         }.root
     }
 
