@@ -26,7 +26,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.updatePaddingRelative
-import dev.forcetower.unes.base.BaseFragment
+import dev.forcetower.core.base.BaseFragment
 import dev.forcetower.core.extensions.doOnApplyWindowInsets
 import dev.forcetower.unes.coreComponent
 import dev.forcetower.dashboard.dagger.DaggerDashboardComponent
