@@ -25,6 +25,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.updatePadding
 import androidx.core.view.updatePaddingRelative
 import dev.forcetower.core.base.BaseFragment
 import dev.forcetower.core.extensions.doOnApplyWindowInsets
@@ -42,6 +43,7 @@ class DashboardFragment : BaseFragment() {
     }
 
     override fun shouldApplyBottomInsets() = false
+    override fun shouldApplyTopInsets() = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         adapter = ElementAdapter()
@@ -59,6 +61,9 @@ class DashboardFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.recyclerElements.doOnApplyWindowInsets { v, insets, padding ->
             v.updatePaddingRelative(bottom = padding.bottom + insets.systemWindowInsetBottom)
+        }
+        binding.appBar.doOnApplyWindowInsets { v, insets, padding ->
+            v.updatePadding(top = padding.top + insets.systemWindowInsetTop)
         }
     }
 }

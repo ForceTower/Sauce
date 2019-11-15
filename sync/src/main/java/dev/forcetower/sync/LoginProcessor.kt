@@ -25,7 +25,6 @@ import com.forcetower.sagres.operation.Status
 import com.forcetower.sagres.operation.login.LoginCallback
 import dev.forcetower.database.base.UNESDatabase
 import dev.forcetower.model.base.Credential
-import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
 
 class LoginProcessor @Inject constructor(
@@ -48,7 +47,7 @@ class LoginProcessor @Inject constructor(
         } else if (current.password != password) {
             database.credentials().changePassword(username, password, institution)
         }
-        database.credentials().markValid(username, institution, true)
+        database.credentials().changeValidation(username, institution, true)
         if (markSelected) database.credentials().select(username, institution)
     }
 }

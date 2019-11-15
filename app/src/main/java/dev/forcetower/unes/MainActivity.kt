@@ -37,10 +37,6 @@ class MainActivity : BaseDaggerActivity() {
         binding.rootView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
                 View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
                 View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-
-        binding.root.doOnApplyWindowInsets { v, insets, padding ->
-            v.updatePadding(top = padding.top + insets.systemWindowInsetTop)
-        }
     }
 
     private fun getNavController() = findNavController(R.id.fragment_container)

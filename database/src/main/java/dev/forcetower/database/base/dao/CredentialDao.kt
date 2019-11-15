@@ -65,8 +65,11 @@ abstract class CredentialDao : AbstractDao<Credential>() {
     abstract suspend fun deleteAll()
 
     @Query("UPDATE Credential SET password = :password WHERE username = :username AND institution = :institution")
-    abstract fun changePassword(username: String, password: String, institution: String)
+    abstract suspend fun changePassword(username: String, password: String, institution: String)
 
     @Query("UPDATE Credential SET valid = :valid WHERE username = :username AND institution = :institution")
-    abstract fun markValid(username: String, institution: String, valid: Boolean)
+    abstract suspend fun changeValidation(username: String, institution: String, valid: Boolean)
+
+    @Query("UPDATE Credential SET valid = :valid WHERE uid = :uid")
+    abstract suspend fun changeValidation(uid: Long, valid: Boolean)
 }

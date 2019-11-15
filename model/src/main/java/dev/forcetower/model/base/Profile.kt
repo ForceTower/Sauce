@@ -33,16 +33,18 @@ import java.util.UUID
  * This puts together information about the extracted account from Sagres
  */
 @Entity(indices = [
-    Index(value = ["uuid"], unique = true)
+    Index(value = ["uuid"], unique = true),
+    Index(value = ["credentialId"], unique = true)
 ], foreignKeys = [
     ForeignKey(childColumns = ["credentialId"], parentColumns = ["uid"], entity = Credential::class, onDelete = CASCADE, onUpdate = CASCADE)
 ])
 data class Profile (
     @PrimaryKey(autoGenerate = true)
     val uid: Long,
-    val processedName: String,
+    val processedName: String?,
+    val username: String,
     val editedName: String?,
-    val credentialId: Long?,
+    val credentialId: Long,
 
     val email: String? = null,
     val courseId: Long? = null,
@@ -54,7 +56,7 @@ data class Profile (
     @ColumnInfo(defaultValue = "-1")
     val calculatedScore: Double = -1.0,
 
-    val imageUrl: String? = null,
+    val profilePictureUrl: String? = null,
     @ColumnInfo(defaultValue = "false")
     val darkThemeEnabled: Boolean = false,
     @ColumnInfo(defaultValue = "0")
@@ -65,7 +67,7 @@ data class Profile (
     val uuid: String = UUID.randomUUID().toString()
 ) {
     @Ignore
-    val name: String = editedName ?: processedName
+    val name: String = editedName ?: processedName ?: username
 
     companion object {
         const val COLLECTION = "profiles"

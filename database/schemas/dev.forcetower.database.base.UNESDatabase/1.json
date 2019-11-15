@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "cb9671defc37b170308b39653d2a417e",
+    "identityHash": "14cb245c4af480bf01a982f36e750e07",
     "entities": [
       {
         "tableName": "Credential",
@@ -64,12 +64,299 @@
           }
         ],
         "foreignKeys": []
+      },
+      {
+        "tableName": "Profile",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `processedName` TEXT, `username` TEXT NOT NULL, `editedName` TEXT, `credentialId` INTEGER NOT NULL, `email` TEXT, `courseId` INTEGER, `course` TEXT, `institutionId` TEXT, `score` REAL NOT NULL DEFAULT -1, `calculatedScore` REAL NOT NULL DEFAULT -1, `profilePictureUrl` TEXT, `darkThemeEnabled` INTEGER NOT NULL DEFAULT false, `darkThemeInvites` INTEGER NOT NULL DEFAULT 0, `experimentsFlags` INTEGER NOT NULL DEFAULT 0, `uuid` TEXT NOT NULL, FOREIGN KEY(`credentialId`) REFERENCES `Credential`(`uid`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "uid",
+            "columnName": "uid",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "processedName",
+            "columnName": "processedName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "username",
+            "columnName": "username",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "editedName",
+            "columnName": "editedName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "credentialId",
+            "columnName": "credentialId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "email",
+            "columnName": "email",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "courseId",
+            "columnName": "courseId",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "course",
+            "columnName": "course",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "institutionId",
+            "columnName": "institutionId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "score",
+            "columnName": "score",
+            "affinity": "REAL",
+            "notNull": true,
+            "defaultValue": "-1"
+          },
+          {
+            "fieldPath": "calculatedScore",
+            "columnName": "calculatedScore",
+            "affinity": "REAL",
+            "notNull": true,
+            "defaultValue": "-1"
+          },
+          {
+            "fieldPath": "profilePictureUrl",
+            "columnName": "profilePictureUrl",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "darkThemeEnabled",
+            "columnName": "darkThemeEnabled",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "false"
+          },
+          {
+            "fieldPath": "darkThemeInvites",
+            "columnName": "darkThemeInvites",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "experimentsFlags",
+            "columnName": "experimentsFlags",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "uuid",
+            "columnName": "uuid",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "uid"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_Profile_uuid",
+            "unique": true,
+            "columnNames": [
+              "uuid"
+            ],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_Profile_uuid` ON `${TABLE_NAME}` (`uuid`)"
+          },
+          {
+            "name": "index_Profile_credentialId",
+            "unique": true,
+            "columnNames": [
+              "credentialId"
+            ],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_Profile_credentialId` ON `${TABLE_NAME}` (`credentialId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "Credential",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "credentialId"
+            ],
+            "referencedColumns": [
+              "uid"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "Message",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `credential_id` INTEGER NOT NULL, `content` TEXT NOT NULL, `sagres_id` INTEGER NOT NULL, `timestamp` INTEGER NOT NULL, `sender_profile` INTEGER NOT NULL, `sender_name` TEXT, `notified` INTEGER NOT NULL, `discipline` TEXT, `uuid` TEXT NOT NULL, `code_discipline` TEXT, `html` INTEGER NOT NULL, `date_string` TEXT, `processing_time` INTEGER, `hash_message` INTEGER, `attachmentName` TEXT, `attachmentLink` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "uid",
+            "columnName": "uid",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "credentialId",
+            "columnName": "credential_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "content",
+            "columnName": "content",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sagresId",
+            "columnName": "sagres_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "timestamp",
+            "columnName": "timestamp",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "senderProfile",
+            "columnName": "sender_profile",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "senderName",
+            "columnName": "sender_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "notified",
+            "columnName": "notified",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "discipline",
+            "columnName": "discipline",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "uuid",
+            "columnName": "uuid",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "codeDiscipline",
+            "columnName": "code_discipline",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "html",
+            "columnName": "html",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dateString",
+            "columnName": "date_string",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "processingTime",
+            "columnName": "processing_time",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "hashMessage",
+            "columnName": "hash_message",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "attachmentName",
+            "columnName": "attachmentName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "attachmentLink",
+            "columnName": "attachmentLink",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "uid"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_Message_hash_message_credential_id",
+            "unique": true,
+            "columnNames": [
+              "hash_message",
+              "credential_id"
+            ],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_Message_hash_message_credential_id` ON `${TABLE_NAME}` (`hash_message`, `credential_id`)"
+          },
+          {
+            "name": "index_Message_sagres_id_credential_id",
+            "unique": true,
+            "columnNames": [
+              "sagres_id",
+              "credential_id"
+            ],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_Message_sagres_id_credential_id` ON `${TABLE_NAME}` (`sagres_id`, `credential_id`)"
+          },
+          {
+            "name": "index_Message_uuid",
+            "unique": true,
+            "columnNames": [
+              "uuid"
+            ],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_Message_uuid` ON `${TABLE_NAME}` (`uuid`)"
+          }
+        ],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'cb9671defc37b170308b39653d2a417e')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '14cb245c4af480bf01a982f36e750e07')"
     ]
   }
 }

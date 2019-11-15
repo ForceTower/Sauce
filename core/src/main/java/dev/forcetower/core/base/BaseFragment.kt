@@ -23,6 +23,7 @@ package dev.forcetower.core.base
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.updatePadding
 import androidx.core.view.updatePaddingRelative
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
@@ -43,9 +44,15 @@ abstract class BaseFragment : Fragment() {
                 v.updatePaddingRelative(bottom = padding.bottom + insets.systemWindowInsetBottom)
             }
         }
+        if (shouldApplyTopInsets()) {
+            view.doOnApplyWindowInsets { v, insets, padding ->
+                v.updatePadding(top = padding.top + insets.systemWindowInsetTop)
+            }
+        }
     }
 
     open fun shouldApplyBottomInsets() = true
+    open fun shouldApplyTopInsets() = true
 
     fun dismissCurrentSnack() = currentSnackbar?.dismiss()
 

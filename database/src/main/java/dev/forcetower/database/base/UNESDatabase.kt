@@ -25,13 +25,21 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import dev.forcetower.database.base.dao.CredentialDao
+import dev.forcetower.database.base.dao.MessageDao
+import dev.forcetower.database.base.dao.ProfileDao
 import dev.forcetower.model.base.Credential
+import dev.forcetower.model.base.Message
+import dev.forcetower.model.base.Profile
 
 @Database(entities = [
-    Credential::class
+    Credential::class,
+    Profile::class,
+    Message::class
 ], version = 1, exportSchema = true)
 abstract class UNESDatabase : RoomDatabase() {
     abstract fun credentials(): CredentialDao
+    abstract fun profiles(): ProfileDao
+    abstract fun messages(): MessageDao
 
     companion object {
         private const val DATABASE_NAME = "unes-shared-db"
