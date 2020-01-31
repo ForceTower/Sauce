@@ -23,6 +23,7 @@ package dev.forcetower.core.base
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.CallSuper
 import androidx.core.view.updatePadding
 import androidx.core.view.updatePaddingRelative
 import androidx.fragment.app.Fragment
@@ -37,6 +38,7 @@ import javax.inject.Inject
 abstract class BaseFragment : Fragment() {
     private var currentSnackbar: Snackbar? = null
 
+    @CallSuper
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (shouldApplyBottomInsets()) {
